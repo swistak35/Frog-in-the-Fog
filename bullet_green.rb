@@ -1,15 +1,6 @@
-$settings[:BulletGreen] = {
-  :DestroyArea => 4.0,
-  :Power => 1.7,
-  :Speed => 25.0,
-  :Reload => 900.0,
-  :Amount => 2.0,
-  :LastShot => 0
-}
-
 class BulletPackageGreen
   def initialize(game, px, py, angle)
-    amount = $settings[:BulletGreen][:Amount].to_i
+    amount = BulletGreen.class_variable_get(:@@amount).to_i
     
     angle_mod = 90.0 / amount
     angle_mod = 15.0 if angle_mod > 15
@@ -26,11 +17,19 @@ class BulletPackageGreen
 end
 
 class BulletGreen < Bullet
+  
+  @@destroyArea = 4.0
+  @@power = 1.7
+  @@speed = 25.0
+  @@reload = 900.0
+  @@amount = 2.0
+  @@lastShot = 0
+  
   def initialize(game, px, py, angle)
     super game, px, py, angle, "bullet_green.png", "bullet_green.wav"
     
-    @vx = Gosu::offset_x(@angle, 0.5) * $settings[:BulletGreen][:Speed]
-    @vy = Gosu::offset_y(@angle, 0.5) * $settings[:BulletGreen][:Speed]
+    @vx = Gosu::offset_x(@angle, 0.5) * @@speed
+    @vy = Gosu::offset_y(@angle, 0.5) * @@speed
   end
   
   def refresh
@@ -41,9 +40,12 @@ end
 
 class Ship
   def shoot_bullet_green
-    if (Gosu::milliseconds > $settings[:BulletGreen][:LastShot] + $settings[:BulletGreen][:Reload]) || ($settings[:BulletGreen][:LastShot] == 0)
+    lastShot = BulletGreen.class_variable_get(:@@lastShot)
+    reload = BulletGreen.class_variable_get(:@@reload)
+    
+    if (Gosu::milliseconds > lastShot + reload) || (lastShot == 0)
       BulletPackageGreen.new(@game, @px, @py, @angle)
-      $settings[:BulletGreen][:LastShot] = Gosu::milliseconds
+      BulletGreen.class_variable_set(:@@lastShot, Gosu::milliseconds)
     end
   end
 end

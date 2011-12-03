@@ -21,9 +21,9 @@ class Player
   def upgrade
     @game.random_new_extra
     
-    case @level
-      when 2
-        @game.msg "To juz 2!"
-    end
+    #case @level
+      #when 2
+        #@game.msg "To juz 2!"
+    #end
   end
 end

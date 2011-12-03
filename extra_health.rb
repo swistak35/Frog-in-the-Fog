@@ -1,18 +1,16 @@
-$settings[:ExtraHealth] = {
-  :Requirement => 2000,
-  :CatchArea => 30
-}
-
 class ExtraHealth < Extra
+
+  @@requirement = 2000
+  @@catchArea = 15
+  
   def initialize(game)
     super game, "extra_health.png"
   end
   
   def gain
-    @game.ship.hit_points += 0.2*$settings[:Ship][:BaseHitPoints]
+    baseHitPoints = Ship.class_variable_get(:@@baseHitPoints)
     
-    if @game.ship.hit_points > $settings[:Ship][:BaseHitPoints] 
-      @game.ship.hit_points = $settings[:Ship][:BaseHitPoints]
-    end
+    @game.ship.hit_points += 0.2 * baseHitPoints
+    @game.ship.hit_points = baseHitPoints if @game.ship.hit_points > baseHitPoints
   end
 end

@@ -1,17 +1,16 @@
-$settings[:BulletRocket] = {
-  :DestroyArea => 30.0,
-  :Power => 10.0,
-  :Speed => 20.0,
-  :Reload => 2000.0,
-  :LastShot => 0
-}
-
 class BulletRocket < Bullet
+  
+  @@destroyArea = 30.0
+  @@power = 10.0
+  @@speed = 20.0
+  @@reload = 2000.0
+  @@lastShot = 0
+  
   def initialize(game, px, py, angle)
     super game, px, py, angle, "bullet_rocket.png", "bullet_rocket.wav"
     
-    @vx = Gosu::offset_x(@angle, 0.5) * $settings[:BulletRocket][:Speed]
-    @vy = Gosu::offset_y(@angle, 0.5) * $settings[:BulletRocket][:Speed]
+    @vx = Gosu::offset_x(@angle, 0.5) * @@speed
+    @vy = Gosu::offset_y(@angle, 0.5) * @@speed
     
     @target = @game.enemies.sort_by do |enemy|
       Gosu::distance(@px, @py, enemy.px, enemy.py)
@@ -21,8 +20,8 @@ class BulletRocket < Bullet
   def refresh
     if !@target.nil? && @game.enemies.include?(@target)
       @angle = Gosu::angle(@px, @py, @target.px, @target.py)
-      @vx = Gosu::offset_x(@angle, 0.5) * $settings[:BulletRocket][:Speed]
-      @vy = Gosu::offset_y(@angle, 0.5) * $settings[:BulletRocket][:Speed]
+      @vx = Gosu::offset_x(@angle, 0.5) * @@speed
+      @vy = Gosu::offset_y(@angle, 0.5) * @@speed
     end
     update_pos
   end
@@ -35,9 +34,12 @@ end
 
 class Ship
   def shoot_bullet_rocket
-    if (Gosu::milliseconds > $settings[:BulletRocket][:LastShot] + $settings[:BulletRocket][:Reload]) || ($settings[:BulletRocket][:LastShot] == 0)
+    lastShot = BulletRocket.class_variable_get(:@@lastShot)
+    reload = BulletRocket.class_variable_get(:@@reload)
+    
+    if (Gosu::milliseconds > lastShot + reload) || (lastShot == 0)
       @game.bullets << BulletRocket.new(@game, @px, @py, @angle)
-      $settings[:BulletRocket][:LastShot] = Gosu::milliseconds
+      BulletRocket.class_variable_set(:@@lastShot, Gosu::milliseconds)
     end
   end
 end

@@ -1,20 +1,18 @@
-$settings[:Ship] = {
-  :Speed => 0.8,
-  :MaxSpeed => 0.98,
-  :Rotation => 4.5,
-  :BaseHitPoints => 200.0
-}
-
 class Ship
   attr_reader :px, :py, :angle
   attr_accessor :hit_points
+  
+  @@speed = 0.8
+  @@maxSpeed = 0.98
+  @@rotation = 4.5
+  @@baseHitPoints = 200.0
   
   def initialize(game, px, py)
     @game, @px, @py = game, px, py
     @window = @game.window
     @image = Gosu::Image.new @window, "images/spaceship.png", false
     
-    @hit_points = $settings[:Ship][:BaseHitPoints]
+    @hit_points = @@baseHitPoints
     
     @vx, @vy, @angle = 0, 0, 0
   end
@@ -33,11 +31,11 @@ class Ship
   end
   
   def turn_left
-    @angle -= $settings[:Ship][:Rotation]
+    @angle -= @@rotation
   end
   
   def turn_right
-    @angle += $settings[:Ship][:Rotation]
+    @angle += @@rotation
   end
   
   def accelerate
@@ -57,19 +55,11 @@ class Ship
     @px %= @window.width
     @py %= @window.height
     
-    @vx *= $settings[:Ship][:Speed]
-    @vy *= $settings[:Ship][:Speed]
+    @vx *= @@speed
+    @vy *= @@speed
   end
   
   def draw
     @image.draw_rot(@px, @py, ZOrder::Ship, @angle)
-  end
-  
-  def self.upgrade_speed
-    $settings[:Ship][:Speed] += 0.01 if $settings[:Ship][:Speed] < $settings[:Ship][:MaxSpeed]
-  end
-  
-  def self.upgrade_hit_points
-    $settings[:Ship][:BaseHitPoints] *= 1.1
   end
 end

@@ -1,13 +1,9 @@
 class Enemy
-  attr_reader :px, :py, :width, :height
+  attr_reader :px, :py, :width, :height, :points
   attr_accessor :hit_points
   
-  def Points
-    $settings[self.class.to_s.to_sym][:Points]
-  end
-  
-  def initialize(game, px, py, angle, level, image)
-    @game, @px, @py, @angle, @level = game, px, py, angle, level
+  def initialize(game, px, py, angle, image, hit_points, speed, points)
+    @game, @px, @py, @angle, @hit_points, @speed, @points = game, px, py, angle, hit_points, speed, points
     @window = @game.window
     @image = Gosu::Image.new @window, "images/"+image, false
     @width = @image.width

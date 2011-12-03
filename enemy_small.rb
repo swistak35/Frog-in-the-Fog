@@ -1,33 +1,28 @@
-$settings[:EnemySmall] = {
-  :BaseHitPoints => 20.0,
-  :Speed => 1.0,
-  :Rotation => 1.0,
-  :Points => 100.0,
-  :LastCreated => 0,
-  :Requirement => 0
-}
-
 class EnemySmall < Enemy
+  
+  @@baseHitPoints = 20.0
+  @@lastCreated = 0
+  @@rotation = 1.0
+  
   def self.generate(game)
     window = game.window
-    if ((Gosu::milliseconds - 5000) > $settings[:EnemySmall][:LastCreated])
+    if (Gosu::milliseconds - 5000) > @@lastCreated
       x = Gosu::random(10, window.width-10)
       y = Gosu::random(10, window.height-10)
-      game.enemies << EnemySmall.new(game, x, y, 0)
-      $settings[:EnemySmall][:LastCreated] = Gosu::milliseconds
+      (game.enemies << EnemySmall.new(game, x, y, 20.0, 1.0, 100.0))
     end
   end
   
-  def initialize(game, px, py, level)
-    super game, px, py, 0, level, "enemy_small.png"
-    @hit_points = $settings[:EnemySmall][:BaseHitPoints] + 5 * @level
+  def initialize(game, px, py, hit_points, speed, points)
+    super game, px, py, 0, "enemy_small.png", hit_points, speed, points
+    @@lastCreated = Gosu::milliseconds
   end
   
   def refresh
-    @angle += $settings[:EnemySmall][:Rotation] - 0.2 * @level
+    @angle += @@rotation
     
-    @px += Gosu::offset_x(@angle, 0.5) * ($settings[:EnemySmall][:Speed] + @level * 0.3) 
-    @py += Gosu::offset_y(@angle, 0.5) * ($settings[:EnemySmall][:Speed] + @level * 0.3)
+    @px += Gosu::offset_x(@angle, 0.5) * @speed
+    @py += Gosu::offset_y(@angle, 0.5) * @speed
     
     @px %= @window.width
     @py %= @window.height

@@ -1,16 +1,19 @@
-$settings[:ExtraBulletBomb] = {
-  :Requirement => 3000,
-  :CatchArea => 30
-}
-
 class ExtraBulletBomb < Extra
+  
+  @@requirement = 3000
+  @@catchArea = 15
+  
   def initialize(game)
     super game, "extra_bullet_bomb.png"
   end
   
   def gain
-    $settings[:BulletBomb][:Power] *= 1.25
-    $settings[:BulletBomb][:Reload] *= 0.98
-    $settings[:BulletBombPiece][:Power] *= 1.15
+    power = BulletBomb.class_variable_get(:@@power) * 1.25
+    reload = BulletBomb.class_variable_get(:@@reload) * 0.98
+    power_piece = BulletBombPiece.class_variable_get(:@@power) * 1.15
+    
+    BulletBomb.class_variable_set(:@@power, power)
+    BulletBomb.class_variable_set(:@@reload, reload)
+    BulletBombPiece.class_variable_set(:@@power, power_piece)
   end
 end

@@ -1,12 +1,8 @@
 class Extra
   attr_reader :px, :py
   
-  def Requirement
-    $settings[self.class.to_s.to_sym][:Requirement]
-  end
-  
-  def CatchArea
-    $settings[self.class.to_s.to_sym][:CatchArea]
+  def catchArea
+    self.class.class_variable_get(:@@catchArea)
   end
   
   def initialize(game, image)

@@ -42,7 +42,7 @@ class Game
   
   def checking_ship_extra_collision
     @extras.each do |extra|
-      if Gosu::distance(extra.px, extra.py, @ship.px, @ship.py) < extra.CatchArea
+      if Gosu::distance(extra.px, extra.py, @ship.px, @ship.py) < extra.catchArea
         extra.gain
         @extras.delete extra
       end
@@ -52,8 +52,8 @@ class Game
   def checking_enemy_bullet_collision
     @enemies.each do |enemy|
       @bullets.each do |bullet|
-        if Gosu::distance(enemy.px, enemy.py, bullet.px, bullet.py) < (bullet.DestroyArea + [enemy.width, enemy.height].max)
-          enemy.hit_points -= bullet.Power
+        if Gosu::distance(enemy.px, enemy.py, bullet.px, bullet.py) < (bullet.destroyArea + [enemy.width, enemy.height].max)
+          enemy.hit_points -= bullet.power
           #bullet.collide
           @bullets.delete bullet
         end
@@ -74,7 +74,7 @@ class Game
     @enemies.each do |enemy|
       if enemy.dead?
         @enemies.delete enemy
-        @player.score += enemy.Points
+        @player.score += enemy.points
       end
     end
   end
@@ -87,13 +87,19 @@ class Game
   end
   
   def random_new_extra
-    extra = $settings.select do |key, value|
-      key.to_s =~ /^Extra/
-    end.select do |key, value|
-      @player.score >= value[:Requirement]
-    end.to_a.rand
+    #extra = $settings.select do |key, value|
+      #key.to_s =~ /^Extra/
+    #end.select do |key, value|
+      #@player.score >= value[:Requirement]
+    #end.to_a.rand
+    extra = [
+      "Star", "ShipSpeed", "ShipHitPoints", "Health", "BulletBomb",
+      #"BulletGreen", "BulletPurple", "BulletRocket"
+    ].select do |name|
+      @player.score >= eval("Extra#{name}.class_variable_get(:@@requirement)")
+    end.rand
     
-    (@extras << eval(extra[0].to_s+".new(self)")) unless extra.nil?
+    (@extras << eval("Extra#{extra}.new(self)")) unless extra.nil?
   end
 
   def draw
@@ -106,7 +112,7 @@ class Game
     @enemies.each { |enemy| enemy.draw }
     
     @fontHUD.draw("Wynik: #{@player.score.to_i}", 10, 10, ZOrder::UI, 1.0, 1.0, 0xffffff00)
-    @fontHUD.draw("Zycie: #{@ship.hit_points.to_i}/#{$settings[:Ship][:BaseHitPoints].to_i}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xffffff00)
+    @fontHUD.draw("Zycie: #{@ship.hit_points.to_i}/#{Ship.class_variable_get(:@@baseHitPoints).to_i}", 10, 40, ZOrder::UI, 1.0, 1.0, 0xffffff00)
     @fontHUD.draw("Poziom: #{@player.level}", 10, 70, ZOrder::UI, 1.0, 1.0, 0xffffff00)
     
     @font.draw(@messages[-1], 10, 530, ZOrder::UI, 1.0, 1.0, 0xffff0000)
@@ -121,6 +127,7 @@ class Game
   def generating_new_enemies
     EnemySmall.generate(self)
     EnemyCoward.generate(self)
+    EnemyLiner.generate(self)
   end
 
   def button_down(id)
@@ -128,8 +135,15 @@ class Game
       when Gosu::KbEscape
         @window.state = :menu
       when Gosu::KbS
-        puts $settings
+        debug
     end
+  end
+  
+  def debug
+    puts "Statek:"
+    puts " szybkosc = #{Ship.class_variable_get(:@@speed)}"
+    puts " baseHitPoints = #{Ship.class_variable_get(:@@speed)}"
+    puts "Bomba"
   end
   
   def out_of_range(x, y)

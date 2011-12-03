@@ -1,22 +1,14 @@
-$settings[:BulletBomb] = {
-  :DestroyArea => 20.0,
-  :Power => 100.0,
-  :Reload => 2500.0,
-  :Speed => 0,
-  :countDown => 5,
-  :LastShot => 0
-}
-
-$settings[:BulletBombPiece] = {
-  :DestroyArea => 4.0,
-  :Power => 1.0,
-  :Speed => 60.0,
-  :Amount => 36.0
-}
-
 class BulletBomb < Bullet
+  
+  @@destroyArea = 20.0
+  @@power = 100.0
+  @@reload = 2500.0
+  @@speed = 0
+  @@countDown = 5
+  @@lastShot = 0
+  
   def initialize(game, px, py, angle)
-    @countdown = $settings[:BulletBomb][:countDown]
+    @countdown = @@countDown
     super game, px, py, angle, "bullet_bomb_#{@countdown}.png"
     
     @explodingSample = Gosu::Sample.new(@window, "samples/bullet_bomb.wav")
@@ -43,11 +35,17 @@ class BulletBomb < Bullet
 end
 
 class BulletBombPiece < Bullet
+  
+  @@destroyArea = 4.0
+  @@power = 1.0
+  @@speed = 60.0
+  @@amount = 36.0
+  
   def initialize(game, px, py, angle)
     super game, px, py, angle, "bullet_bomb_piece.png", "bullet_bomb_piece.wav"
     
-    @vx = Gosu::offset_x(@angle, 0.5) * $settings[:BulletBombPiece][:Speed]
-    @vy = Gosu::offset_y(@angle, 0.5) * $settings[:BulletBombPiece][:Speed]
+    @vx = Gosu::offset_x(@angle, 0.5) * @@speed
+    @vy = Gosu::offset_y(@angle, 0.5) * @@speed
   end
   
   def refresh
@@ -58,9 +56,12 @@ end
 
 class Ship
   def place_bomb
-    if (Gosu::milliseconds > $settings[:BulletBomb][:LastShot] + $settings[:BulletBomb][:Reload]) || ($settings[:BulletBomb][:LastShot] == 0)
+    lastShot = BulletBomb.class_variable_get(:@@lastShot)
+    reload = BulletBomb.class_variable_get(:@@reload)
+    
+    if (Gosu::milliseconds > lastShot + reload) || (lastShot == 0)
       @game.bullets << BulletBomb.new(@game, @px, @py, 0)
-      $settings[:BulletBomb][:LastShot] = Gosu::milliseconds
+      BulletBomb.class_variable_set(:@@lastShot, Gosu::milliseconds)
     end
   end
 end

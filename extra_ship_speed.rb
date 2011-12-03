@@ -1,14 +1,16 @@
-$settings[:ExtraShipSpeed] = {
-  :Requirement => 1000,
-  :CatchArea => 30
-}
-
 class ExtraShipSpeed < Extra
+  
+  @@requirement = 1000
+  @@catchArea = 15
+  
   def initialize(game)
     super game, "extra_ship_speed.png"
   end
   
   def gain
-    $settings[:Ship][:Speed] += 0.01
+    speed = Ship.class_variable_get(:@@speed) + 0.01
+    max_speed = Ship.class_variable_get(:@@maxSpeed)
+    
+    Ship.class_variable_set(:@@speed, speed) if speed <= max_speed
   end
 end

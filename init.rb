@@ -9,9 +9,6 @@ class Array
     shuffle[0]
   end
 end
-  
-
-$settings = {}
 
 load 'ship.rb'
 load 'player.rb'
@@ -25,6 +22,7 @@ load 'bullet_bomb.rb'
 load 'enemy.rb'
 load 'enemy_small.rb'
 load 'enemy_coward.rb'
+load 'enemy_liner.rb'
 
 load 'extra.rb'
 load 'extra_star.rb'

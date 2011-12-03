@@ -1,16 +1,20 @@
 class Bullet
   attr_reader :px, :py, :angle
   
-  def DestroyArea
-    $settings[self.class.to_s.to_sym][:DestroyArea]
+  def destroyArea
+    self.class.class_variable_get(:@@destroyArea)
   end
   
-  def Power
-    $settings[self.class.to_s.to_sym][:Power]
+  def power
+    self.class.class_variable_get(:@@power)
   end
   
-  def Speed
-    $settings[self.class.to_s.to_sym][:Speed]
+  def speed
+    self.class.class_variable_get(:@@speed)
+  end
+  
+  def lastShot
+    self.class.class_variable_get(:@@lastShot)
   end
   
   def initialize(game, px, py, angle, image, collisionSample = nil)
