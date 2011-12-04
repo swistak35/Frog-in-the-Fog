@@ -1,7 +1,8 @@
 class ExtraStar < Extra
+  @@extras << self
   
-  @@requirement = 0
-  @@catchArea = 10
+  Requirement = 0
+  CatchArea = 10
   @@bonus = 100
   
   def initialize(game)

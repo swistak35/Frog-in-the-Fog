@@ -34,6 +34,11 @@ load 'extra_bullet_green.rb'
 load 'extra_bullet_rocket.rb'
 load 'extra_bullet_bomb.rb'
 
+load 'wave.rb'
+load 'wave_1.rb'
+load 'wave_2.rb'
+load 'wave_liners_4.rb'
+
 load 'menu.rb'
 load 'game.rb'
 load 'window.rb'

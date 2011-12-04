@@ -1,7 +1,8 @@
 class ExtraShipHitPoints < Extra
+  @@extras << self
   
-  @@requirement = 1000
-  @@catchArea = 15
+  Requirement = 1000
+  CatchArea = 15
   
   def initialize(game)
     super game, "extra_ship_hit_points.png"

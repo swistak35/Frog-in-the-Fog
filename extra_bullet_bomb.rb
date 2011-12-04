@@ -1,7 +1,8 @@
 class ExtraBulletBomb < Extra
+  @@extras << self
   
-  @@requirement = 3000
-  @@catchArea = 15
+  Requirement = 3000
+  CatchArea = 15
   
   def initialize(game)
     super game, "extra_bullet_bomb.png"

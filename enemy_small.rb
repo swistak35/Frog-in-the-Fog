@@ -6,9 +6,12 @@ class EnemySmall < Enemy
   
   def self.generate(game)
     window = game.window
-    if (Gosu::milliseconds - 5000) > @@lastCreated
-      x = Gosu::random(10, window.width-10)
-      y = Gosu::random(10, window.height-10)
+    if (Gosu::milliseconds - 8000) > @@lastCreated
+      begin
+        x = rand(window.width-60) + 30
+        y = rand(window.height-60) + 30
+      end while game.ship.px.between?(x-50,x+50) && game.ship.py.between?(y-50,y+50)
+      
       (game.enemies << EnemySmall.new(game, x, y, 20.0, 1.0, 100.0))
     end
   end

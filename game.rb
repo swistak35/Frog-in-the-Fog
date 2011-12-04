@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :window, :bullets, :enemies, :ship, :messages, :player
+  attr_accessor :window, :bullets, :enemies, :ship, :messages, :player, :lastWave, :extras
   attr_reader :start
   
   def initialize(window)
@@ -14,6 +14,7 @@ class Game
     @start = Gosu::milliseconds
     @messages = ["", "", ""]
     @lastExtra = 0
+    @lastWave = 0
     
     @bullets = []
     @enemies = []
@@ -28,8 +29,7 @@ class Game
     checking_ship_extra_collision
     
     check_enemies_life
-    generating_new_enemies
-    generating_new_extras
+    generating_new_objects
   end
   
   def updating_objects
@@ -42,7 +42,7 @@ class Game
   
   def checking_ship_extra_collision
     @extras.each do |extra|
-      if Gosu::distance(extra.px, extra.py, @ship.px, @ship.py) < extra.catchArea
+      if Gosu::distance(extra.px, extra.py, @ship.px, @ship.py) < extra.class.catchArea
         extra.gain
         @extras.delete extra
       end
@@ -78,29 +78,6 @@ class Game
       end
     end
   end
-  
-  def generating_new_extras
-    if (Gosu::milliseconds - 27000) > @lastExtra
-      random_new_extra
-      @lastExtra = Gosu::milliseconds
-    end
-  end
-  
-  def random_new_extra
-    #extra = $settings.select do |key, value|
-      #key.to_s =~ /^Extra/
-    #end.select do |key, value|
-      #@player.score >= value[:Requirement]
-    #end.to_a.rand
-    extra = [
-      "Star", "ShipSpeed", "ShipHitPoints", "Health", "BulletBomb",
-      #"BulletGreen", "BulletPurple", "BulletRocket"
-    ].select do |name|
-      @player.score >= eval("Extra#{name}.class_variable_get(:@@requirement)")
-    end.rand
-    
-    (@extras << eval("Extra#{extra}.new(self)")) unless extra.nil?
-  end
 
   def draw
     @background_image.draw(0, 0, ZOrder::Background)
@@ -124,10 +101,13 @@ class Game
     @messages << txt
   end
   
-  def generating_new_enemies
+  def generating_new_objects
     EnemySmall.generate(self)
-    EnemyCoward.generate(self)
-    EnemyLiner.generate(self)
+    #EnemyCoward.generate(self)
+    
+    Wave.generate(self)
+    
+    Extra.generate(self)
   end
 
   def button_down(id)

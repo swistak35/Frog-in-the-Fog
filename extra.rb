@@ -1,8 +1,30 @@
 class Extra
   attr_reader :px, :py
   
-  def catchArea
-    self.class.class_variable_get(:@@catchArea)
+  @@lastExtra = 0
+  @@extras = []
+  
+  def self.generate(game)
+    if Gosu::milliseconds - 27000 > @@lastExtra
+      @@lastExtra = Gosu::milliseconds unless random_new_extra(game).nil?
+    end
+  end
+  
+  def self.random_new_extra(game)
+    extra = @@extras.select do |extra|
+      game.player.score >= extra.requirement
+    end.rand
+    
+    extra.new(game) unless extra.nil?
+    extra
+  end
+  
+  def self.catchArea
+    self::CatchArea
+  end
+  
+  def self.requirement
+    self::Requirement
   end
   
   def initialize(game, image)
@@ -13,6 +35,7 @@ class Extra
     @image = Gosu::Image.new @window, "images/"+image, false
     @collisionSample ||= Gosu::Sample.new(@window, "samples/extra_gain.wav")
     @collisionSample.play(0.6)
+    @game.extras << self
   end
   
   def update
