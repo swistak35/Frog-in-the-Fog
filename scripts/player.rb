@@ -12,8 +12,7 @@ class Player
   def update
     if @score >= @nextLevel
       @level += 1
-      @nextLevel *= 2
-      @nextLevel += 100
+      @nextLevel += 500 + (@level-1)*100
       @game.msg "Zdobyles #{@level} poziom!"
       upgrade
     end
@@ -21,10 +20,5 @@ class Player
   
   def upgrade
     Extra.random_new_extra(@game)
-    
-    #case @level
-      #when 2
-        #@game.msg "To juz 2!"
-    #end
   end
 end

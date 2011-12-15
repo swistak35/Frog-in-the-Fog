@@ -12,23 +12,23 @@ class BulletBomb < Bullet
     super game, px, py, angle, "bullet_bomb_#{@countdown}.png"
     
     @explodingSample = Gosu::Sample.new(@window, "samples/bullet_bomb.wav") if @game.sound
-    @lastCount = Gosu::milliseconds
+    @lastCount = @game.time
   end
   
   def refresh
-    if Gosu::milliseconds - @lastCount >= 1000
+    if @game.time - @lastCount >= 1000
       @countdown -= 1
       @image = Gosu::Image.new(@window, "images/bullet_bomb_#{@countdown}.png", false) if @countdown > 0
       explode if @countdown == 0
-      @lastCount = Gosu::milliseconds
+      @lastCount = @game.time
     end
   end
   
   def explode
     @explodingSample.play(0.3) if @game.sound
     @game.bullets.delete(self)
-    36.times do |i|
-      angle= i * 10.0
+    90.times do |i|
+      angle= i * 4.0
       @game.bullets << BulletBombPiece.new(@game, @px, @py, angle)
     end
   end
@@ -56,12 +56,12 @@ end
 
 class Ship
   def place_bomb
-    lastShot = BulletBomb.class_variable_get(:@@lastShot)
-    reload = BulletBomb.class_variable_get(:@@reload)
+    lastShot = BulletBomb.lastShot
+    reload = BulletBomb.reload
     
-    if (Gosu::milliseconds > lastShot + reload) || (lastShot == 0)
+    if (@game.time > lastShot + reload) || (lastShot == 0)
       @game.bullets << BulletBomb.new(@game, @px, @py, 0)
-      BulletBomb.class_variable_set(:@@lastShot, Gosu::milliseconds)
+      BulletBomb.lastShot = @game.time
     end
   end
 end

@@ -1,12 +1,11 @@
 class EnemySmall < Enemy
   
-  @@baseHitPoints = 20.0
   @@lastCreated = 0
-  @@rotation = 1.0
+  Rotation = 1.0
   
   def self.generate(game)
     window = game.window
-    if (Gosu::milliseconds - 8000) > @@lastCreated
+    if (game.time - 8000) > @@lastCreated
       begin
         x = rand(window.width-60) + 30
         y = rand(window.height-60) + 30
@@ -22,11 +21,11 @@ class EnemySmall < Enemy
   
   def initialize(game, px, py, attr)
     super game, px, py, 0, "enemy_small.png", attr
-    @@lastCreated = Gosu::milliseconds
+    @@lastCreated = @game.time
   end
   
   def refresh
-    @angle += @@rotation
+    @angle += Rotation
     
     @px += Gosu::offset_x(@angle, 0.5) * @speed
     @py += Gosu::offset_y(@angle, 0.5) * @speed

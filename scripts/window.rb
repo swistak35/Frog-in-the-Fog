@@ -1,10 +1,11 @@
 class Window < Gosu::Window
-  attr_accessor :game, :menu, :state, :pause, :sound
+  attr_accessor :game, :menu, :state, :pause, :sound, :game_over, :highscore
   
   def initialize(sound = false, fullscreen = false)
     super(1020, 740, fullscreen)
     self.caption = "Frog In Space"
     
+    @sound = sound
     @state = :menu
     @menu = Menu.new(self)
   end
@@ -17,6 +18,10 @@ class Window < Gosu::Window
         @game.update
       when :pause
         @pause.update
+      when :highscore
+        @highscore.update
+      when :game_over
+        @game_over.update
     end
   end
   
@@ -28,6 +33,10 @@ class Window < Gosu::Window
         @game.draw
       when :pause
         @pause.draw
+      when :highscore
+        @highscore.draw
+      when :game_over
+        @game_over.draw
     end
   end
   
@@ -39,6 +48,10 @@ class Window < Gosu::Window
         @game.button_down(id)
       when :pause
         @pause.button_down(id)
+      when :highscore
+        @highscore.button_down(id)
+      when :game_over
+        @game_over.button_down(id)
     end
   end
 end

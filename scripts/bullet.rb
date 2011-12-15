@@ -13,8 +13,20 @@ class Bullet
     self.class.class_variable_get(:@@speed)
   end
   
-  def lastShot
-    self.class.class_variable_get(:@@lastShot)
+  def self.lastShot
+    self.class_variable_get(:@@lastShot)
+  end
+  
+  def self.reload
+    self.class_variable_get(:@@reload)
+  end
+  
+  def self.reload=(reload)
+    self.class_variable_set(:@@reload, reload)
+  end
+  
+  def self.lastShot=(lastShot)
+    self.class_variable_set(:@@lastShot, lastShot)
   end
   
   def initialize(game, px, py, angle, image, collisionSample = nil)
@@ -34,8 +46,5 @@ class Bullet
   
   def draw
     @image.draw_rot(@px, @py, ZOrder::Bullet, @angle)
-  end
-  
-  def collide
   end
 end

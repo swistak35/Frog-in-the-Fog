@@ -5,6 +5,7 @@ class Game
   
   def initialize(window)
     @window = window
+    @window.state = :game
     
     @background_image = Gosu::Image.new @window, "images/background_game.png", true
     @font = Gosu::Font.new(@window, Gosu::default_font_name, 20)
@@ -21,12 +22,14 @@ class Game
     @enemies = []
     @extras = []
     
+    EnemyBoss.state = :before
     @time = Gosu::milliseconds
     @paused = 0
     @sound = @window.sound
   end
 
   def update
+    @window.game_over = GameOver.new(@window) if @ship.hit_points <= 0
     @time = Gosu::milliseconds - @paused
     updating_objects
     
@@ -58,9 +61,8 @@ class Game
   def checking_enemy_bullet_collision
     @enemies.each do |enemy|
       @bullets.each do |bullet|
-        if Gosu::distance(enemy.px, enemy.py, bullet.px, bullet.py) < (bullet.destroyArea + [enemy.width, enemy.height].min)
+        if (Gosu::distance(enemy.px, enemy.py, bullet.px, bullet.py) < (bullet.destroyArea + [enemy.width, enemy.height].min/2)) && (enemy.type != :bullet)
           enemy.hit_points -= bullet.power
-          #bullet.collide
           @bullets.delete bullet
         end
       end
@@ -69,7 +71,7 @@ class Game
   
   def checking_enemy_ship_collision
     @enemies.each do |enemy|
-      if Gosu::distance(enemy.px, enemy.py, @ship.px, @ship.py) < (20 + [enemy.width, enemy.height].min)
+      if Gosu::distance(enemy.px, enemy.py, @ship.px, @ship.py) < (20 + [enemy.width, enemy.height].min/2)
         @ship.hit_points -= enemy.hit_points
         @enemies.delete enemy
       end
@@ -119,18 +121,12 @@ class Game
   def button_down(id)
     case id
       when Gosu::KbEscape
-        #@window.state = :menu
         @window.pause = Pause.new(@window)
       when Gosu::KbS
-        debug
+        @player.score += 10000
+      when Gosu::KbD
+        Extra.random_new_extra self
     end
-  end
-  
-  def debug
-    puts "Statek:"
-    puts " szybkosc = #{Ship.class_variable_get(:@@speed)}"
-    puts " baseHitPoints = #{Ship.class_variable_get(:@@speed)}"
-    puts "Bomba"
   end
   
   def out_of_range(x, y)

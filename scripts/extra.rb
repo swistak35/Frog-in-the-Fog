@@ -5,8 +5,8 @@ class Extra
   @@extras = []
   
   def self.generate(game)
-    if Gosu::milliseconds - 27000 > @@lastExtra
-      @@lastExtra = Gosu::milliseconds unless random_new_extra(game).nil?
+    if game.time - 27000 > @@lastExtra
+      @@lastExtra = game.time unless random_new_extra(game).nil?
     end
   end
   

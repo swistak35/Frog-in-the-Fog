@@ -1,13 +1,18 @@
 class Enemy
-  attr_reader :px, :py, :width, :height, :points
-  attr_accessor :hit_points
+  attr_reader :px, :py, :width, :height
+  attr_accessor :hit_points, :points
   
-  def initialize(game, px, py, angle, image, hit_points, speed, points)
-    @game, @px, @py, @angle, @hit_points, @speed, @points = game, px, py, angle, hit_points, speed, points
+  def initialize(game, px, py, angle, image, attr)
+    @game, @px, @py, @angle = game, px, py, angle
     @window = @game.window
     @image = Gosu::Image.new @window, "images/"+image, false
     @width = @image.width
     @height = @image.height
+    @points || 
+    
+    attr.each do |key, value|
+      eval("@#{key} = #{value}")
+    end
   end
   
   def dead?

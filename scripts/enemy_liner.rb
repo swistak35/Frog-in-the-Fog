@@ -1,6 +1,6 @@
 class EnemyLiner < Enemy
   def initialize(game, px, py, attr)
-    super game, px, py, 180, "bird_1.png", attr
+    super game, px, py, 180, "enemy_liner.png", attr
   end
   
   def refresh
