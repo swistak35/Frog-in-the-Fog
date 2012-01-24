@@ -1,10 +1,12 @@
 class BulletPurple < Bullet
   
-  @@destroyArea = 10.0
-  @@power = 3.5
-  @@speed = 35.0
-  @@reload = 500.0
-  @@lastShot = 0
+  def self.reset
+    @@destroyArea = 10.0
+    @@power = 3.5
+    @@speed = 35.0
+    @@reload = 500.0
+    @@lastShot = 0
+  end
   
   def initialize(game, px, py, angle)
     super game, px, py, angle, "bullet_purple.png", "bullet_purple.wav"

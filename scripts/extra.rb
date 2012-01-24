@@ -1,7 +1,10 @@
 class Extra
   attr_reader :px, :py
   
-  @@lastExtra = 0
+  def self.reset
+    @@lastExtra = 0
+  end
+  
   @@extras = []
   
   def self.generate(game)

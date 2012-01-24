@@ -1,6 +1,9 @@
 class EnemySmall < Enemy
   
-  @@lastCreated = 0
+  def self.reset
+    @@lastCreated = 0
+  end
+  
   Rotation = 1.0
   
   def self.generate(game)

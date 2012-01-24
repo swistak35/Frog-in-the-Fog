@@ -1,8 +1,11 @@
 class EnemyBoss < Enemy
-  @@state = :before
-  
-  def self.state=(state)
+
+  def self.reset
     @@state = :before
+  end
+
+  def self.state=(state)
+    @@state = state
   end
   
   def self.state

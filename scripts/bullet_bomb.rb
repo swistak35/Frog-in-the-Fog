@@ -1,11 +1,13 @@
 class BulletBomb < Bullet
   
-  @@destroyArea = 20.0
-  @@power = 30.0
-  @@reload = 2500.0
-  @@speed = 0
-  @@countDown = 5
-  @@lastShot = 0
+  def self.reset
+    @@destroyArea = 20.0
+    @@power = 30.0
+    @@reload = 2500.0
+    @@speed = 0
+    @@countDown = 5
+    @@lastShot = 0
+  end
   
   def initialize(game, px, py, angle)
     @countdown = @@countDown

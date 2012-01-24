@@ -5,7 +5,7 @@ class Wave16 < Wave
   Max = 99999
   
   def generate_enemies
-    if EnemyBoss.class_variable_get(:@@state) == :before
+    if EnemyBoss.state == :before
       @game.enemies << EnemyBoss.new(@game, 520.0, -200.0, {
         hit_points: 1000.0,
         speed: 0.3,

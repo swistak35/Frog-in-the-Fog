@@ -18,12 +18,14 @@ end
 
 class BulletGreen < Bullet
   
-  @@destroyArea = 4.0
-  @@power = 1.7
-  @@speed = 25.0
-  @@reload = 900.0
-  @@amount = 2.0
-  @@lastShot = 0
+  def self.reset
+    @@destroyArea = 4.0
+    @@power = 1.7
+    @@speed = 25.0
+    @@reload = 900.0
+    @@amount = 2.0
+    @@lastShot = 0
+  end
   
   def self.amount
     @@amount

@@ -7,6 +7,10 @@ class Game
     @window = window
     @window.state = :game
     
+    [EnemyBoss, EnemySmall, BulletBomb, BulletGreen, BulletPurple, BulletRocket, Extra, ExtraStar, Ship, Wave].each do |cls|
+      cls.reset
+    end
+
     @background_image = Gosu::Image.new @window, "images/background_game.png", true
     @font = Gosu::Font.new(@window, Gosu::default_font_name, 20)
     @fontHUD = Gosu::Font.new(@window, Gosu::default_font_name, 30)
@@ -21,8 +25,7 @@ class Game
     @bullets = []
     @enemies = []
     @extras = []
-    
-    EnemyBoss.state = :before
+
     @time = Gosu::milliseconds
     @paused = 0
     @sound = @window.sound

@@ -2,11 +2,14 @@ class Ship
   attr_reader :px, :py, :angle
   attr_accessor :hit_points
   
-  @@speed = 0.8
+  def self.reset
+    @@speed = 0.8
+    @@baseHitPoints = 250.0
+  end
+
   @@maxSpeed = 0.95
   @@rotation = 4.5
-  @@baseHitPoints = 250.0
-  
+
   def initialize(game, px, py)
     @game, @px, @py = game, px, py
     @window = @game.window

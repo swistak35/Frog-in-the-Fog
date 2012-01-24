@@ -1,6 +1,9 @@
 class Wave
   
-  @@lastWave = 0
+  def self.reset
+    @@lastWave = 0
+  end
+  
   @@waves = []
   
   def self.generate(game)
