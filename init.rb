@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'gosu'
 
 module ZOrder
@@ -23,7 +24,6 @@ load 'scripts/enemy.rb'
 load 'scripts/enemy_bullet.rb'
 load 'scripts/enemy_rocket.rb'
 load 'scripts/enemy_small.rb'
-#load 'scripts/enemy_coward.rb'
 load 'scripts/enemy_liner.rb'
 load 'scripts/enemy_circle.rb'
 load 'scripts/enemy_chaser.rb'
