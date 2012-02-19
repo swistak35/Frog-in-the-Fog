@@ -1,9 +1,10 @@
-
 To run, type:
+
 ruby init.rb
 
 
 Requirements:
+
 * ruby 1.9 (tested on 1.9.2)
 * Gosu gem (installation: 'gem install gosu')
 
