@@ -1,7 +1,7 @@
 class Window < Gosu::Window
   attr_accessor :game, :menu, :state, :pause, :sound, :game_over, :highscore
   
-  def initialize(sound = false, fullscreen = false)
+  def initialize(sound = true, fullscreen = false)
     super(1020, 740, fullscreen)
     self.caption = "Frog In Space"
     

@@ -1,6 +1,7 @@
 class Bullet
   attr_reader :px, :py, :angle
   
+  
   def destroyArea
     self.class.class_variable_get(:@@destroyArea)
   end
