@@ -70,11 +70,11 @@ class BulletGreen < Bullet
     },
   ]
   def self.reset
-    @@level = -1
-    BulletGreen.upgrade
     @@destroyArea = 4.0
     @@speed = 25.0
     @@lastShot = 0
+    @@level = -1
+    BulletGreen.upgrade
   end
   
   def self.upgrade
