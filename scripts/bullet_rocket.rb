@@ -1,11 +1,72 @@
 class BulletRocket < Bullet
-    
+  Upgrades = [
+    {
+      speed: 8.0,
+      power: 10.0,
+      reload: 2000.0
+    },
+    {
+      speed: 8.8,
+      power: 12.0,
+      reload: 1890.0
+    },
+    {
+      speed: 9.68,
+      power: 14.4,
+      reload: 1786.0
+    },
+    {
+      speed: 10.65,
+      power: 17.28,
+      reload: 1687.0
+    },
+    {
+      speed: 11.71,
+      power: 20.74,
+      reload: 1594.0
+    },
+    {
+      speed: 12.88,
+      power: 24.88,
+      reload: 1507.0
+    },
+    {
+      speed: 14.17,
+      power: 29.86,
+      reload: 1424.0
+    },
+    {
+      speed: 15.59,
+      power: 35.83,
+      reload: 1346.0
+    },
+    {
+      speed: 17.15,
+      power: 43.0,
+      reload: 1271.0
+    },
+    {
+      speed: 18.86,
+      power: 51.6,
+      reload: 1202.0
+    }
+  ]
   def self.reset
     @@destroyArea = 30.0
-    @@power = 10.0
-    @@speed = 20.0
-    @@reload = 2000.0
     @@lastShot = 0
+    @@level = -1
+    BulletRocket.upgrade
+  end
+  
+  def self.upgrade
+    @@level += 1
+    if @@level < 10
+      @@speed = Upgrades[@@level][:speed]
+      @@power = Upgrades[@@level][:power]
+      @@reload = Upgrades[@@level][:reload]
+    else
+      @@power += 2
+    end
   end
   
   def initialize(game, px, py, angle)

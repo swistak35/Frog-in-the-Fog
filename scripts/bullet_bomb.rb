@@ -1,12 +1,65 @@
 class BulletBomb < Bullet
+  Upgrades = [
+    {
+      power: 30.0,
+      reload: 2500.0
+    },
+    {
+      power: 37.5,
+      reload: 2325.0
+    },
+    {
+      power: 46.88,
+      reload: 2162.0
+    },
+    {
+      power: 58.6,
+      reload: 2010.0
+    },
+    {
+      power: 73.0,
+      reload: 1870.0
+    },
+    {
+      power: 91.6,
+      reload: 1739.0
+    },
+    {
+      power: 114.0,
+      reload: 1617.0
+    },
+    {
+      power: 143.0,
+      reload: 1504.0
+    },
+    {
+      power: 179.0,
+      reload: 1398.0
+    },
+    {
+      power: 224.0,
+      reload: 1301.0
+    }
+  ]
   
   def self.reset
     @@destroyArea = 20.0
-    @@power = 30.0
-    @@reload = 2500.0
     @@speed = 0
     @@countDown = 5
     @@lastShot = 0
+    @@level = -1
+    BulletBomb.upgrade
+    BulletBombPiece.reset
+  end
+  
+  def self.upgrade
+    @@level += 1
+    if @@level < 10
+      @@power = Upgrades[@@level][:power]
+      @@reload = Upgrades[@@level][:reload]
+    else
+      @@power += 1
+    end
   end
   
   def initialize(game, px, py, angle)
@@ -37,11 +90,35 @@ class BulletBomb < Bullet
 end
 
 class BulletBombPiece < Bullet
+  Upgrades = [
+    { power: 1.0 },
+    { power: 1.2 },
+    { power: 1.44 },
+    { power: 1.73 },
+    { power: 2.07 },
+    { power: 2.49 },
+    { power: 2.99 },
+    { power: 3.58 },
+    { power: 4.29 },
+    { power: 5.16 }
+  ]
   
-  @@destroyArea = 4.0
-  @@power = 1.0
-  @@speed = 60.0
-  @@amount = 36.0
+  def self.reset
+    @@destroyArea = 4.0
+    @@speed = 60.0
+    @@amount = 36.0
+    @@level = -1
+    BulletBombPiece.upgrade
+  end
+  
+  def self.upgrade
+    @@level += 1
+    if @@level < 10
+      @@power = Upgrades[@@level][:power]
+    else
+      @@power += 0.01
+    end
+  end
   
   def initialize(game, px, py, angle)
     super game, px, py, angle, "bullet_bomb_piece.png", "bullet_bomb_piece.wav"
