@@ -8,25 +8,29 @@ class Wave6Circle < Wave
     10.times do |i|
       y = -40 - i*40
       
-      @game.enemies << EnemyCircle.new(@game, 203, y, {
-        hit_points: 30.0,
+      q = EnemyCircle.new(@game, 203, y, {
+        hit_points: 35.0,
         speed: 0.8,
         points: 55.0,
         direction: :left,
         speed_2: 3.0
       })
+      @game.enemies << q
+      q = nil
     end
     
     10.times do |i|
       y = -40 - i*40
       
-      @game.enemies << EnemyCircle.new(@game, 815, y, {
-        hit_points: 30.0,
+      q = EnemyCircle.new(@game, 815, y, {
+        hit_points: 35.0,
         speed: 0.8,
         points: 55.0,
         direction: :right,
         speed_2: 3.0
       })
+      @game.enemies << q
+      q = nil
     end
     
     4.times do |k|
@@ -35,11 +39,13 @@ class Wave6Circle < Wave
       10.times do |i|
         x = 51 + i*102
         
-        @game.enemies << EnemyLiner.new(@game, x, y, {
-          hit_points: 23.0,
+        q = EnemyLiner.new(@game, x, y, {
+          hit_points: 26.0,
           speed: 0.8,
           points: 37.0
         })
+        @game.enemies << q
+        q = nil
       end
     end
   end

@@ -7,8 +7,8 @@ class Wave13 < Wave
   def generate_enemies
     10.times do |i|
       x = 51 + i*102
-      @game.enemies << EnemyPath.new(@game, x, -80, {
-        hit_points: 26.0,
+      q = EnemyPath.new(@game, x, -80, {
+        hit_points: 80.0,
         speed: 1.0,
         points: 58.0,
         path: [
@@ -16,12 +16,14 @@ class Wave13 < Wave
           [x, 780.0]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
     
     10.times do |i|
       x = 51 + i*102
-      @game.enemies << EnemyPath.new(@game, x, 820, {
-        hit_points: 26.0,
+      q = EnemyPath.new(@game, x, 820, {
+        hit_points: 80.0,
         speed: 1.0,
         points: 58.0,
         path: [
@@ -29,12 +31,14 @@ class Wave13 < Wave
           [x, -40.0]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
     
     8.times do |i|
       y = 51 + i*102
-      @game.enemies << EnemyPath.new(@game, -80, y, {
-        hit_points: 26.0,
+      q = EnemyPath.new(@game, -80, y, {
+        hit_points: 80.0,
         speed: 1.32,
         points: 58.0,
         path: [
@@ -42,12 +46,14 @@ class Wave13 < Wave
           [1060.0, y]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
     
     8.times do |i|
       y = 51 + i*102
-      @game.enemies << EnemyPath.new(@game, 1100, y, {
-        hit_points: 26.0,
+      q = EnemyPath.new(@game, 1100, y, {
+        hit_points: 80.0,
         speed: 1.32,
         points: 58.0,
         path: [
@@ -55,6 +61,8 @@ class Wave13 < Wave
           [-40.0, y]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
   end
 end

@@ -51,7 +51,9 @@ class EnemyBoss < Enemy
     
     if @game.time - @children_last > @reload
       @amount.times do
-        @game.enemies << EnemyKid.new(@game, @px, @py, @enemy_kid)
+        x = EnemyKid.new(@game, @px, @py, @enemy_kid)
+        @game.enemies << x
+        x = nil
       end
       @children_last = @game.time
     end

@@ -7,9 +7,9 @@ class Wave7Square < Wave
   def generate_enemies
     40.times do |i|
       y = -40 - i*50
-      @game.enemies << EnemyPath.new(@game, 260, y, {
-        hit_points: 50.0,
-        speed: 3.0,
+      q = EnemyPath.new(@game, 260, y, {
+        hit_points: 60.0,
+        speed: 3.5,
         points: 131.0,
         path: [
           [260.0,120.0],
@@ -18,6 +18,8 @@ class Wave7Square < Wave
           [260.0,620.0]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
   end
 end

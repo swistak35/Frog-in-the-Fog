@@ -3,7 +3,7 @@ class Window < Gosu::Window
   
   def initialize(sound = true, fullscreen = false)
     super(1020, 740, fullscreen)
-    self.caption = "Frog In Space"
+    self.caption = "Frog In the Fog"
     
     @sound = sound
     @state = :menu

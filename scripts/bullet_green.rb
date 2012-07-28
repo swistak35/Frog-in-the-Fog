@@ -10,7 +10,9 @@ class BulletPackageGreen
     [1,-1].each do |mode|
       (1..amount/2).each do |i|
         an = angle + mode * i * angle_mod
-        game.bullets << BulletGreen.new(game, px, py, an)
+        x = BulletGreen.new(game, px, py, an)
+        game.bullets << x
+        x = nil
       end
     end
   end

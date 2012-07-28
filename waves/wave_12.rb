@@ -18,12 +18,14 @@ class Wave12 < Wave
     
     30.times do |i|
       x = -80 - 200*i
-      @game.enemies << EnemyPath.new(@game, x, 370, {
-        hit_points: 24.0,
-        speed: 3.0,
+      q = EnemyPath.new(@game, x, 370, {
+        hit_points: 80.0,
+        speed: 3.4,
         points: 60.0,
         path: e_path
       })
+      @game.enemies << q
+      q = nil
     end
   end
 end

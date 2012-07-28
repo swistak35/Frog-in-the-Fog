@@ -8,12 +8,15 @@ class Wave9Chasers < Wave
     5.times do |i|
       x = 101 + i*200
       
-      @game.enemies << EnemyChaser.new(@game, x, -40, {
-        hit_points: 70.0,
-        speed: 1.2,
+      q = EnemyChaser.new(@game, x, -40, {
+        hit_points: 110.0,
+        speed: 1.35,
         points: 150.0,
-        shoot_bullet: true
+        shoot_bullet: true,
+        bullet_reload: 400
       })
+      @game.enemies << q
+      q = nil
     end
   end
 end

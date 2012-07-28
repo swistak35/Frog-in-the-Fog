@@ -84,7 +84,9 @@ class BulletBomb < Bullet
     @game.bullets.delete(self)
     90.times do |i|
       angle= i * 4.0
-      @game.bullets << BulletBombPiece.new(@game, @px, @py, angle)
+      x = BulletBombPiece.new(@game, @px, @py, angle)
+      @game.bullets << x
+      x = nil
     end
   end
 end
@@ -139,7 +141,9 @@ class Ship
     reload = BulletBomb.reload
     
     if (@game.time > lastShot + reload) || (lastShot == 0)
-      @game.bullets << BulletBomb.new(@game, @px, @py, 0)
+      x = BulletBomb.new(@game, @px, @py, 0)
+      @game.bullets << x
+      x = nil
       BulletBomb.lastShot = @game.time
     end
   end

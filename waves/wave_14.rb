@@ -7,8 +7,8 @@ class Wave14 < Wave
   def generate_enemies
     59.times do |i|
       x = -40 - 58*i
-      @game.enemies << EnemyPath.new(@game, x, 10.0, {
-        hit_points: 20.0,
+      q = EnemyPath.new(@game, x, 10.0, {
+        hit_points: 40.0,
         speed: 4.0,
         points: 50.0,
         path: [
@@ -18,28 +18,36 @@ class Wave14 < Wave
           [10.0, 730.0]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
     
-    @game.enemies << EnemyChaser.new(@game, 520, -40, {
+    q = EnemyChaser.new(@game, 520, -40, {
       hit_points: 200.0,
       speed: 1.8,
       points: 350.0,
-      shoot_rocket: true
+      shoot_rocket: true,
+      shoot_bullet: true,
+      bullet_reload: 250
     })
+    @game.enemies << q
+    q = nil
     
     [10.0, 730.0].each do |y|
-      @game.enemies << EnemyMother.new(@game, -40, y, {
-        hit_points: 200,
-        speed: 0.8,
+      q = EnemyMother.new(@game, -40, y, {
+        hit_points: 700,
+        speed: 0.7,
         points: 270,
         reload: 7500,
-        amount: 2,
+        amount: 5,
         enemy_kid: {
-          hit_points: 2,
+          hit_points: 3.0,
           speed: 2.4,
           points: 1
         }
       })
+      @game.enemies << q
+      q = nil
     end
   end
 end

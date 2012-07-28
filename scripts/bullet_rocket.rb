@@ -103,7 +103,9 @@ class Ship
     reload = BulletRocket.reload
     
     if (@game.time > lastShot + reload) || (lastShot == 0)
-      @game.bullets << BulletRocket.new(@game, @px, @py, @angle)
+      x = BulletRocket.new(@game, @px, @py, @angle)
+      @game.bullets << x
+      x = nil
       BulletRocket.lastShot = @game.time
     end
   end

@@ -10,11 +10,13 @@ class Wave4Massive < Wave
       
       10.times do |i|
         x = 51 + i*102
-        @game.enemies << EnemyLiner.new(@game, x, y, {
-          hit_points: 3.0,
-          speed: 1.2,
+        q = EnemyLiner.new(@game, x, y, {
+          hit_points: 4.0,
+          speed: 1.3,
           points: 21.0
         })
+        @game.enemies << q
+        q = nil
       end
     end
   end

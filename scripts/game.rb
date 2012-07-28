@@ -10,6 +10,8 @@ class Game
     [EnemyBoss, EnemySmall, BulletBomb, BulletGreen, BulletPurple, BulletRocket, Extra, ExtraStar, Ship, Wave].each do |cls|
       cls.reset
     end
+    
+    GC.enable
 
     @background_image = Gosu::Image.new @window, "images/background_game.png", true
     @font = Gosu::Font.new(@window, Gosu::default_font_name, 20)
@@ -41,6 +43,7 @@ class Game
     checking_ship_extra_collision
     
     check_enemies_life
+    
     generating_new_objects
   end
   
@@ -53,40 +56,61 @@ class Game
   end
   
   def checking_ship_extra_collision
+    to_remove = []
     @extras.each do |extra|
       if Gosu::distance(extra.px, extra.py, @ship.px, @ship.py) < extra.class.catchArea
         extra.gain
-        @extras.delete extra
+        to_remove << extra
       end
     end
+    
+    @extras.delete_if do |extra|
+      to_remove.include? extra
+    end
+    to_remove = nil
   end
   
   def checking_enemy_bullet_collision
+    to_remove = []
     @enemies.each do |enemy|
       @bullets.each do |bullet|
         if (Gosu::distance(enemy.px, enemy.py, bullet.px, bullet.py) < (bullet.destroyArea + [enemy.width, enemy.height].min/2)) && (enemy.type != :bullet)
           enemy.hit_points -= bullet.power
-          @bullets.delete bullet
+          to_remove << bullet
         end
       end
     end
+    
+    @bullets.delete_if do |bullet|
+      to_remove.include? bullet
+    end
+    to_remove = nil
   end
   
   def checking_enemy_ship_collision
+    to_remove = []
     @enemies.each do |enemy|
       if Gosu::distance(enemy.px, enemy.py, @ship.px, @ship.py) < (20 + [enemy.width, enemy.height].min/2)
         @ship.hit_points -= enemy.hit_points
-        @enemies.delete enemy
+        to_remove << enemy
       end
     end
+    
+    @enemies.delete_if do |enemy|
+      to_remove.include? enemy
+    end
+    to_remove = nil
   end
   
   def check_enemies_life
     @enemies.each do |enemy|
       if enemy.dead?
-        @enemies.delete enemy
         @player.score += enemy.points
       end
+    end
+    
+    @enemies.delete_if do |enemy|
+      enemy.dead?
     end
   end
 
@@ -114,21 +138,15 @@ class Game
   
   def generating_new_objects
     EnemySmall.generate(self)
-    #EnemyCoward.generate(self)
-    
-    Wave.generate(self)
-    
-    Extra.generate(self)
+    Wave.generate(self)    
   end
 
   def button_down(id)
     case id
       when Gosu::KbEscape
         @window.pause = Pause.new(@window)
-      when Gosu::KbS
-        @player.score += 10000
-      when Gosu::KbD
-        Extra.random_new_extra self
+      when Gosu::KbF
+        puts @bullets.size
     end
   end
   

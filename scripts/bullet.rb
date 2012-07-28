@@ -1,6 +1,6 @@
 class Bullet
   attr_reader :px, :py, :angle
-  
+  attr_accessor :window, :image, :game
   
   def destroyArea
     self.class.class_variable_get(:@@destroyArea)

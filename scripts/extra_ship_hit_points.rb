@@ -9,7 +9,7 @@ class ExtraShipHitPoints < Extra
   end
   
   def gain
-    baseHitPoints = Ship.class_variable_get(:@@baseHitPoints) * 1.2
+    baseHitPoints = Ship.class_variable_get(:@@baseHitPoints) + 100
     
     Ship.class_variable_set(:@@baseHitPoints, baseHitPoints)
   end

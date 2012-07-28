@@ -7,12 +7,6 @@ class Extra
   
   @@extras = []
   
-  def self.generate(game)
-    if game.time - 27000 > @@lastExtra
-      @@lastExtra = game.time unless random_new_extra(game).nil?
-    end
-  end
-  
   def self.random_new_extra(game)
     extra = @@extras.select do |extra|
       game.player.score >= extra.requirement

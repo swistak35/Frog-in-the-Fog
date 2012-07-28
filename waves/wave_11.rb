@@ -5,22 +5,24 @@ class Wave11 < Wave
   Max = 50800
   
   def generate_enemies
-    @game.enemies << EnemyMother.new(@game, -100, 300, {
-      hit_points: 200,
+    q = EnemyMother.new(@game, -100, 300, {
+      hit_points: 700,
       speed: 0.7,
       points: 300,
       enemy_kid: {
-        hit_points: 2,
-        speed: 3.0,
+        hit_points: 4.0,
+        speed: 3.5,
         points: 1
       }
     })
+    @game.enemies << q
+    q = nil
     
     56.times do |i|
       y = -40 - i*150
       
-      @game.enemies << EnemyPath.new(@game, -40, y, {
-        hit_points: 17.0,
+      q = EnemyPath.new(@game, -40, y, {
+        hit_points: 30.0,
         speed: 3.0,
         points: 40.0,
         path: [
@@ -42,6 +44,8 @@ class Wave11 < Wave
             [510.0, 370.0]
         ]
       })
+      @game.enemies << q
+      q = nil
     end
   end
 end

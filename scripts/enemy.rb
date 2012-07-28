@@ -43,22 +43,26 @@ class Enemy
   
   def shoot_bullet
     if @game.time - @bullet_last > @bullet_reload
-      @game.enemies << EnemyBullet.new(@game, @px, @py, @angle, {
+      x = EnemyBullet.new(@game, @px, @py, @angle, {
         speed: @bullet_speed,
         hit_points: @bullet_hit_points,
         points: 1,
       })
+      @game.enemies << x
+      x = nil
       @bullet_last = @game.time
     end
   end
   
   def shoot_rocket
     if @game.time - @rocket_last > @rocket_reload
-      @game.enemies << EnemyRocket.new(@game, @px, @py, @angle, {
+      x = EnemyRocket.new(@game, @px, @py, @angle, {
         speed: @rocket_speed,
         hit_points: @rocket_hit_points,
         points: 1,
       })
+      @game.enemies << x
+      x = nil
       @rocket_last = @game.time
     end
   end

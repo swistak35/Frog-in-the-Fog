@@ -14,6 +14,6 @@ class ExtraStar < Extra
   
   def gain
     @game.player.score += @@bonus
-    @@bonus *= 1.02
+    @@bonus *= 1.03
   end
 end
