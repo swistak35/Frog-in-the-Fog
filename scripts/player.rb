@@ -6,13 +6,13 @@ class Player
     @window = @game.window
     @score = 0.0
     @level = 1
-    @nextLevel = 500
+    @nextLevel = 80
   end
   
   def update
     if @score >= @nextLevel
       @level += 1
-      @nextLevel += 500 + (@level-1)*80
+      @nextLevel += 80 + (@level-1)*80
       @game.msg "Zdobyles #{@level} poziom!"
       upgrade
     end
