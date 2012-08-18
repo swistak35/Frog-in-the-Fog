@@ -36,6 +36,3 @@ or
 ```
 ruby init.rb
 ```
-
-Troubleshooting
-----------------
