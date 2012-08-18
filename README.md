@@ -1,32 +1,34 @@
-To run, type:
+Frog in the Fog
+================
+2d shooter written in Ruby using Gosu. We have to defeat all hostile birds, with green, armed Frog flying on cloud.
 
+Requirements
+----------------
+* on Windows all you need is Ruby 1.9.x and Gosu gem (gem install gosu)
+* on Linux you need following SDL libraries (required by gosu):
+** build-essential
+** freeglut3-dev
+** libfreeimage-dev
+** libgl1-mesa-dev
+** libopenal-dev
+** libpango1.0-dev
+** libsdl-mixer1.2-dev
+** libsdl-ttf2.0-dev
+** libsndfile-dev
+** libxinerama-dev
+* Debian-based distributions:
+```
+sudo apt-get install build-essential freeglut3-dev libfreeimage-dev libgl1-mesa-dev libopenal-dev libpango1.0-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsndfile-dev libxinerama-dev
+```
+
+Run
+----------------
+```
+./froginthefog
+```
+
+or
+
+```
 ruby init.rb
-
-
-Requirements:
-
-* ruby 1.9 (tested on 1.9.2)
-* Gosu gem (installation: 'gem install gosu')
-
-On windows all you need is ruby and gosu gem.
-
-On linux you should have installed these libraries - they are required to install Gosu:
-
-SDL libraries (required by Gosu):
-
-* build-essential
-* freeglut3-dev
-* libfreeimage-dev
-* libgl1-mesa-dev
-* libopenal-dev
-* libpango1.0-dev
-* libsdl-mixer1.2-dev
-* libsdl-ttf2.0-dev
-* libsndfile-dev
-* libxinerama-dev
-
-* short command to install libs on debian-based OS: (sudo apt-get install build-essential freeglut3-dev libfreeimage-dev libgl1-mesa-dev libopenal-dev libpango1.0-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsndfile-dev libxinerama-dev)
-
-
-
-
+```
